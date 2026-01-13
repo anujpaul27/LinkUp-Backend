@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 app.use(
   cors({
-    origin: 'http://localhost:5173',
+    origin: 'https://link-up-backend-cyan.vercel.app/',
     credentials: true
   })
 );
@@ -66,11 +66,15 @@ async function run() {
     // JWT Authentication
     app.post('/jwt',(req,res)=>{
       const {uid} = req.body;
+      if (!uid)
+      {
+        return res.status(400).send({error: 'uid required.'})
+      }
       const payloader = {uid}
       const token = jwt.sign(payloader,process.env.JWT_SECRET,{expiresIn: '1h'})
       res.cookie('token',token,{
         httpOnly: true,
-        secure: false
+        secure: true   // True for deployment of this code
       })
       .send({message: 'Token Create Success.'})
     })
