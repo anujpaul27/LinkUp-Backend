@@ -84,7 +84,8 @@ async function run() {
       const token = jwt.sign(payloader,process.env.JWT_SECRET,{expiresIn: '1h'})
       res.cookie('token',token,{
         httpOnly: true,
-        secure: true   // True for deployment of this code
+        secure: true,   // True for deployment of this code
+        sameSite: 'none',
       })
       .send({message: 'Token Create Success.'})
     })
