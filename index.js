@@ -10,20 +10,15 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 const allowedOrigins = [
-  "http://localhost:5173",                 // local dev
-  "https://linkup-f4145.web.app",     // deployed frontend
+  "http://localhost:5173",
+  "https://linkup-f4145.web.app"   // Firebase/Netlify frontend
 ];
 
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
+  origin: allowedOrigins,
   credentials: true
 }));
+
 
 app.use(express.json());
 app.use(cookieParser());
